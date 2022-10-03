@@ -8,12 +8,14 @@ require('./db');
 require('./models/User');
 //
 const authRoutes = require('./routes/authRoutes');
+const requiredToken = require('./Middlewares/AuthTokenRequired');
 //
 app.use(bodyParser.json());
 app.use(authRoutes);
 //
 
-app.get('/', (req, res) => {
+app.get('/', requiredToken, (req, res) => {
+    console.log(req.user);
     res.send('This is home page');
 })
 
